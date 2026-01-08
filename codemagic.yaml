@@ -3,12 +3,15 @@ workflows:
     name: Android Debug APK
     max_build_duration: 60
     environment:
-      android_signing:
-        - debug
+      vars:
+        GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4096m"
     scripts:
-      - name: Build APK
+      - name: Make gradlew executable
         script: |
           chmod +x gradlew
+      - name: Build Debug APK
+        script: |
           ./gradlew assembleDebug
     artifacts:
       - app/build/outputs/apk/debug/app-debug.apk
+
